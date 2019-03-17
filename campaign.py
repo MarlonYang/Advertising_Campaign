@@ -44,7 +44,7 @@ def station_values(campaign_budget, default_bid, station, sku, sku_len):
                                               'Campaign End Date', 'Campaign Targeting Type', 'Ad Group', 'Max Bid',
                                               'SKU', 'Keyword', 'Match Type', 'Campaign Status', 'Ad Group Status',
                                               'Status', 'Bid+']},
-                        'UK': {'Date': time.strftime("%d/%m/%Y", timeArray), 'Auto': 'AutoUK', 'Status': 'Enabled',
+                        'UK': {'Date': time.strftime("%d/%m/%Y", timeArray), 'Auto': 'Auto', 'Status': 'Enabled',
                                'title_name': ['Campaign Name', 'Campaign Daily Budget', 'Campaign Start Date',
                                               'Campaign End Date', 'Campaign Targeting Type', 'Ad Group Name',
                                               'Max Bid', 'SKU', 'Keyword', 'Match Type', 'Campaign Status',
