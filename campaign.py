@@ -1,10 +1,11 @@
 import xlwt, time, xlrd
+import pandas as pd
 
 
 def main():
-    path = r"/Users/yang/文件/000 - 资料/Python/test/test1.xlsx"
+    path = r"C:\Users\Administrator\Desktop\上传模板\E组 批量广告SKU 20190411.xls"
     campaign_budget = 200
-    default_bid = 0.02
+    default_bid = 0.03
 
     read_excel(path, campaign_budget, default_bid)
 
@@ -13,12 +14,13 @@ def main():
 def read_excel(path, campaign_budget, default_bid):
 
     try:
-        campaign_excel = xlrd.open_workbook(path)
 
-        for i in range(len(campaign_excel.sheets())):
-            station = campaign_excel.sheets()[i].name
-            sku = campaign_excel.sheets()[i].col_values(0, 0)
-            sku_len = len(sku)*2
+        df = pd.read_excel(path, sheet_name = 0)
+        station_set = set(map(lambda x: x[-6:], df['渠道来源']))
+        for station in station_set:
+            station_name = ''.join(['Amazon-Z01', station])
+            sku = list(df.loc[df['渠道来源'] == station_name]['SellSKU'])
+            sku_len = len(sku) * 2
             station_values(campaign_budget, default_bid, station, sku, sku_len)
 
     except Exception as e:
@@ -54,24 +56,22 @@ def station_values(campaign_budget, default_bid, station, sku, sku_len):
                                               'Enddatum der Kampagne', 'Ausrichtungstyp der Kampagne', 'Anzeigengruppe',
                                               'Maximales Gebot', 'SKU', 'Keyword', 'Übereinstimmungstyp',
                                               'Kampagnenstatus', 'Anzeigengruppe Status', 'Status', 'gebot+']},
-                        'FR': {'Date': time.strftime("%d/%m/%Y", timeArray), 'Auto': 'Automatique', 'Status': 'Activé',
-                               'title_name': ['Nom de la Campagne', 'Budget quotidien de la Campagne',
-                                              'Date de début de la Campagne', 'Date de fin de la Campagne',
-                                              'Type de Ciblage de la Campagne', "Nom du groupe d'annonces",
-                                              'Enchère Max', 'SKU', 'Mot-clé', 'Type de correspondance',
-                                              'Statut de la campagne', 'Statut du groupe d’annonces', 'Statut']},
+                        'FR': {'Date': time.strftime("%d/%m/%Y", timeArray), 'Auto': 'Auto', 'Status': 'Enabled',
+                               'title_name': ['Campaign Name', 'Campaign Daily Budget', 'Campaign Start Date',
+                                              'Campaign End Date', 'Campaign Targeting Type', 'Ad Group Name',
+                                              'Max Bid', 'SKU', 'Keyword', 'Match Type', 'Campaign Status',
+                                              'Ad Group Status', 'Status', 'Bid+']},
                         'IT': {'Date': time.strftime("%d/%m/%Y", timeArray), 'Auto': 'Automatico', 'Status': 'attivo',
                                'title_name': ['Nome della campagna', 'Budget giornaliero campagna',
                                               'Data di inizio della campagna', 'Data di fine della campagna',
                                               'Tipo di targeting della campagna', 'Nome del gruppo di annunci',
                                               'Offerta massima', 'SKU', 'Parola chiave', 'Tipo di corrispondenza',
                                               'Stato della campagna', 'Stato del gruppo', 'Stato']},
-                        'ES': {'Date': time.strftime("%d/%m/%Y", timeArray), 'Auto': 'Automático', 'Status': 'Habilitado',
-                               'title_name': ['Nombre de la campaña', 'Presupuesto diario de la campaña',
-                                              'Fecha de inicio de la campaña', 'Fecha de finalización de la campaña',
-                                              'tipo de segmentación de la campaña', 'Grupo de anuncios', 'Puja Máxima',
-                                              'SKU', 'Palabra clave', 'Tipo de concordancia', 'Estado de la campaña',
-                                              'Estado del grupo de anuncios', 'Estado']}}
+                        'ES': {'Date': time.strftime("%d/%m/%Y", timeArray), 'Auto': 'Auto', 'Status': 'Enabled',
+                               'title_name': ['Campaign Name', 'Campaign Daily Budget', 'Campaign Start Date',
+                                              'Campaign End Date', 'Campaign Targeting Type', 'Ad Group Name',
+                                              'Max Bid', 'SKU', 'Keyword', 'Match Type', 'Campaign Status',
+                                              'Ad Group Status', 'Status', 'Bid+']}}
 
         campaign_date = station_info[station_type]['Date']
         campaign_auto = station_info[station_type]['Auto']
