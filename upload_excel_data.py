@@ -30,8 +30,8 @@ def read_data():
 
             new_df = pd.merge(df,df_week)
             new_df = pd.merge(new_df,df_exchange)
-            new_df['Spend$'] = new_df['spend'] * new_df['Price']
-            new_df['Sales$'] = new_df['sales'] * new_df['Price']
+            new_df['Spend$'] = new_df['Spend'] * new_df['Price']
+            new_df['Sales$'] = new_df['Sales'] * new_df['Price']
 
             final_df = new_df.drop(columns = 'Price')
             upload_file = pd.concat([upload_file, final_df], axis = 0)
