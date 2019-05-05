@@ -23,13 +23,10 @@ def read_data():
         upload_file = pd.read_excel(final_path, sheet_name='Sheet1')
 
         for l in L:
-            country = l[-7:-5]
-            station = l[-11:-5]
-            group = l[-13:-12]
             df = pd.read_excel(l)
-            df["Group"] = group
-            df["Country"] = country
-            df["Station"] = station
+            df["Group"] = l[-13:-12]
+            df["Country"] = l[-7:-5]
+            df["Station"] = l[-11:-5]
 
             new_df = pd.merge(df,df_week)
             new_df = pd.merge(new_df,df_exchange)
