@@ -21,22 +21,29 @@ def read_data():
         df_week = pd.read_excel(transform_path, sheet_name='Sheet1')
         df_exchange = pd.read_excel(transform_path, sheet_name='Sheet2')
         upload_file = pd.read_excel(final_path, sheet_name='Sheet1')
-
+        
+#         df = pd.read_excel(L[0])
+#         df["Group"] = L[0][-13:-12]
+#         df["Country"] = L[0][-7:-5]
+#         df["Station"] = L[0][-11:-5]
+#         df.columns = list(upload_file.columns)
+#         upload_file = pd.concat([upload_file, df], axis = 0)
+        
         for l in L:
             df = pd.read_excel(l)
             df["Group"] = l[-13:-12]
             df["Country"] = l[-7:-5]
             df["Station"] = l[-11:-5]
+            df.columns = list(upload_file.columns)
+            upload_file = pd.concat([upload_file, df], axis = 0)
 
-            new_df = pd.merge(df,df_week)
-            new_df = pd.merge(new_df,df_exchange)
-            new_df['Spend$'] = new_df['Spend'] * new_df['Price']
-            new_df['Sales$'] = new_df['Sales'] * new_df['Price']
-
-            final_df = new_df.drop(columns = 'Price')
-            upload_file = pd.concat([upload_file, final_df], axis = 0)
-
-        upload_file.to_excel(excel_writer = upload_path, index = None)
+        upload_file = pd.merge(upload_file,df_week)
+        upload_file = pd.merge(upload_file,df_exchange, on = 'Country', how = 'left')
+        
+        upload_file['Spend$'] = upload_file['Spend'] * upload_file['Price']
+        upload_file['Sales$'] = upload_file['Sales'] * upload_file['Price']
+        final_df = upload_file.drop(columns = 'Price')
+        final_df.to_excel(excel_writer = upload_path, index = None)
 
     except Exception as e:
         print("读取数据失败", e)
@@ -45,12 +52,13 @@ def main():
 
     global path, transform_path, final_path, upload_path
 
-    path = r"/Users/yang/Downloads/20190428"
-    transform_path = r"/Users/yang/Downloads/Data.xlsx"
-    final_path = r"/Users/yang/Downloads/final.xlsx"
-    upload_path = r"/Users/yang/Downloads/upload-{}.xlsx".format(path[-8:])
+    path = r"C:\Users\Administrator\Desktop\Summary\关键词\20190504"
+    transform_path = r"C:\Users\Administrator\Desktop\Summary\关键词\exchange.xlsx"
+    final_path = r"C:\Users\Administrator\Desktop\Summary\关键词\final.xlsx"
+    upload_path = r"C:\Users\Administrator\Desktop\Summary\upload-{}.xlsx".format(path[-8:])
 
     read_data()
+    
 
 if __name__ == '__main__':
     main()
