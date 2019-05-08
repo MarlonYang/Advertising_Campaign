@@ -1,4 +1,4 @@
-# 简化工作效率的脚本
+# 简化工作、提升效率的脚本
 
 [批量广告：一个广告活动 - 多个广告组（分别用 sku 命名） -  sku](https://github.com/MarlonYang/AdvertisingCampaign/blob/master/campaign.py)
 
