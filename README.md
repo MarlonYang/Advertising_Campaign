@@ -7,3 +7,5 @@
 [批量汇总excel中广告关键词数据，并添加一些计算列](https://github.com/MarlonYang/AdvertisingCampaign/blob/master/keywords_data.py)
 
 [转仓sku批量生成上传文件](https://github.com/MarlonYang/AdvertisingCampaign/blob/master/to_template.py)
+
+[批量更新广告活动对应sku+asin](https://github.com/MarlonYang/Advertising_Campaign/blob/master/sku_data.py)
